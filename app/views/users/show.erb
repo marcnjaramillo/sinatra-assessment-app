@@ -1,1 +1,8 @@
-
+<p> Here are your jobs, <%= @user.username %>
+<% @user.jobs.each do |job| %>
+  <div>
+    <%= job.location %>
+    <%= job.type %>
+    <%= job.duration %>
+  </div>
+<% end %>
