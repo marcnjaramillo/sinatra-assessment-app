@@ -1,7 +1,7 @@
-<p> Welcome <%= current_user.username %>
+<p> Welcome, <%= current_user.username %>
 <h2> Jobs </h2>
 
-<% @job.each do |job| %>
+<% @jobs.each do |job| %>
   <div>
     <%= job.location %>
     <%= job.type %>

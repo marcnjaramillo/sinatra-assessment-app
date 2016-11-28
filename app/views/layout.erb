@@ -9,7 +9,6 @@
       <%= yield %>
 
       <% if logged_in? %>
-        <p>Welcome, <%=current_user.username %></p>
         <a href="/jobs/new"> Create Job </a>
         <a href="/logout"> Log Out </a>
 
