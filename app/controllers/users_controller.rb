@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect "/jobs"
     else
-      redirect to '/signup'
+      erb :'users/error'
     end
   end
 
