@@ -3,7 +3,7 @@
 <form method="post" action="/jobs/<%=@job.id%>">
   <input id="hidden" type="hidden" name="_method" value="PATCH">
   <input type="text" name="location" value="<%= @job.location %>">
-  <input type="text" name="type" value="<%= @job.type %>">
+  <input type="text" name="nature" value="<%= @job.nature %>">
   <input type="text" name="duration" value="<%= @job.duration %>">
   <input type="submit" value="submit">
 </form>

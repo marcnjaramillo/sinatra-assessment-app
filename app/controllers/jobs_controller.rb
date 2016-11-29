@@ -17,12 +17,13 @@ class JobsController < ApplicationController
   end
 
   post '/jobs' do
-    if params[:location] || params[:type] || params[:duration] == ""
-      redirect to '/jobs/new'
-    else
-      current_user.jobs.create(location: params["location"], type: params["type"], duration: params["duration"])
-      redirect to "/jobs/#{@jobs.id}"
-    end
+    #if params[:location] || params[:nature] || params[:duration] == ""
+    #  redirect to '/jobs/create_job'
+    #else
+      @user = User.find_by(id: session[:user_id])
+      @job = Job.create(location: params[:location], nature: params[:nature], duration: params[:duration], user_id: @user.id)
+      redirect to "/jobs/#{@job.id}"
+    #end
   end
 
   get '/jobs/:id' do
@@ -48,12 +49,12 @@ class JobsController < ApplicationController
   end
 
   patch '/jobs/:id' do
-    if params[:content] == ""
+    if params[:location] || params[:nature] || params[:duration] == ""
       redirect to "/jobs/#{params[:id]}/edit"
     else
       @job = Job.find_by_id(params[:id])
       @job.location = params[:location]
-      @job.type = params[:type]
+      @job.nature = params[:nature]
       @job.duration = params[:duration]
       @job.save
       redirect to "/jobs/#{@job.id}"
@@ -67,10 +68,8 @@ class JobsController < ApplicationController
         @job.delete
         redirect to '/jobs'
       else
-        redirect to '/job'
+        redirect to '/login'
       end
-    else
-      redirect to '/login'
     end
   end
 end

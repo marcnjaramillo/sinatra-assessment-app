@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20161125055753) do
 
   create_table "jobs", force: :cascade do |t|
     t.string  "location"
-    t.string  "type"
+    t.string  "nature"
     t.integer "duration"
     t.integer "user_id"
   end

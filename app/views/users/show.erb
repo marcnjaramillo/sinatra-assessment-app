@@ -1,8 +1,18 @@
 <p> Here are your jobs, <%= @user.username %>
 <% @user.jobs.each do |job| %>
   <div>
-    <%= job.location %>
-    <%= job.type %>
-    <%= job.duration %>
+    <table>
+      <tr>
+        <th>Location</th>
+        <th>Nature</th>
+        <th>Duration</th>
+      </tr>
+      <br>
+      <tr>
+        <td><%= job.location %></td>
+        <td><%= job.nature %></td>
+        <td><%= job.duration %> hours</td>
+      </tr>
+    </table>
   </div>
 <% end %>
