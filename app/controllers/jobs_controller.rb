@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
   get '/jobs' do
     if logged_in?
-      @jobs = Job.all
+      @jobs = current_user.jobs.all
       erb :'jobs/details'
     else
       redirect to '/login'
@@ -17,18 +17,18 @@ class JobsController < ApplicationController
   end
 
   post '/jobs' do
-    #if params[:location] || params[:nature] || params[:duration] == ""
-    #  redirect to '/jobs/create_job'
-    #else
-      @user = User.find_by(id: session[:user_id])
+    if params[:location] == "" || params[:nature] == "" || params[:duration] == ""
+      redirect to '/jobs/create_job'
+    else
+      @user = current_user
       @job = Job.create(location: params[:location], nature: params[:nature], duration: params[:duration], user_id: @user.id)
       redirect to "/jobs/#{@job.id}"
-    #end
+    end
   end
 
   get '/jobs/:id' do
     if logged_in?
-      @job = Job.find_by_id(params[:id])
+      @job = Job.find(params[:id])
       erb :'jobs/show_job'
     else
       redirect to '/login'
@@ -37,7 +37,7 @@ class JobsController < ApplicationController
 
   get '/jobs/:id/edit' do
     if logged_in?
-      @job = Job.find_by_id(params[:id])
+      @job = Job.find(params[:id])
       if @job.user_id == current_user.id
        erb :'jobs/edit_job'
       else
@@ -49,10 +49,9 @@ class JobsController < ApplicationController
   end
 
   patch '/jobs/:id' do
-    if params[:location] || params[:nature] || params[:duration] == ""
+    if params[:location] == "" || params[:nature] == "" || params[:duration] == ""
       redirect to "/jobs/#{params[:id]}/edit"
     else
-      @job = Job.find_by_id(params[:id])
       @job.location = params[:location]
       @job.nature = params[:nature]
       @job.duration = params[:duration]
@@ -63,9 +62,9 @@ class JobsController < ApplicationController
 
   delete '/jobs/:id/delete' do
     if logged_in?
-      @job = Job.find_by_id(params[:id])
+      @job = Job.find(params[:id])
       if @job.user_id == current_user.id
-        @job.delete
+        @job.destroy
         redirect to '/jobs'
       else
         redirect to '/login'
