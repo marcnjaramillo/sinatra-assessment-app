@@ -12,9 +12,11 @@
   </tr>
 </table>
 
-<form method="post" action="/jobs/<%=@job.id%>/delete">
+<form method="POST" action="/jobs/<%=@job.id%>/delete">
   <input id="hidden" type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete Job">
 </form>
-
+<br>
 <a href="/jobs/<%=@job.id%>/edit"> Edit Job </a>
+<br>
+<a href="/jobs"> Jobs Overview </a>
