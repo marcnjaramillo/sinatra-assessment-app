@@ -52,6 +52,7 @@ class JobsController < ApplicationController
     if params[:location] == "" || params[:nature] == "" || params[:duration] == ""
       redirect to "/jobs/#{params[:id]}/edit"
     else
+      @job = Job.find(params[:id])
       @job.location = params[:location]
       @job.nature = params[:nature]
       @job.duration = params[:duration]
