@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
   get '/jobs' do
     if logged_in?
-      @jobs = current_user.jobs.all
+      @jobs = current_user.jobs
       erb :'jobs/details'
     else
       redirect to '/login'
@@ -20,16 +20,19 @@ class JobsController < ApplicationController
     if params[:location] == "" || params[:nature] == "" || params[:duration] == ""
       redirect to '/jobs/create_job'
     else
-      @user = current_user
-      @job = Job.create(location: params[:location], nature: params[:nature], duration: params[:duration], user_id: @user.id)
+      @job = current_user.jobs.create(params)
       redirect to "/jobs/#{@job.id}"
     end
   end
 
   get '/jobs/:id' do
     if logged_in?
-      @job = Job.find(params[:id])
-      erb :'jobs/show_job'
+      @job = Job.find_by_id(params[:id])
+      if @job && @job.user == current_user
+        erb :'jobs/show_job'
+      else
+        redirect to '/jobs'
+      end
     else
       redirect to '/login'
     end
@@ -53,10 +56,7 @@ class JobsController < ApplicationController
       redirect to "/jobs/#{params[:id]}/edit"
     else
       @job = Job.find(params[:id])
-      @job.location = params[:location]
-      @job.nature = params[:nature]
-      @job.duration = params[:duration]
-      @job.save
+      @job.update(params)
       redirect to "/jobs/#{@job.id}"
     end
   end

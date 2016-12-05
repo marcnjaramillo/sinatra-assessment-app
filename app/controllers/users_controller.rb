@@ -9,12 +9,15 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      redirect to '/signup'
+    if !logged_in?
+      user = User.new(params)
+      if user.save
+        session[:user_id] = user.id
+        redirect to '/jobs'
+      else
+        redirect to '/signup'
+      end
     else
-      @user = User.create(username: params[:username], email: params[:email], password: params[:password])
-      @user.save
-      session[:user_id] = @user.id
       redirect to '/jobs'
     end
   end
