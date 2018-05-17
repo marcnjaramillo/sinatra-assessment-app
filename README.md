@@ -8,7 +8,7 @@ access to a schedule management system that is designed with their unique needs
 in mind. I wanted to test out my knowledge of Sinatra and CRUD to create the
 simplest piece of the app: creating a user (interpreter) and jobs.
 
-##Using the App
+## Using the App
 
 Currently, the application is not hosted on a website. In order to run it, you must clone the
 GitHub repo [here](https://github.com/marcnjaramillo/sinatra-assessment-app).
